@@ -147,20 +147,26 @@ fi
 
 echo_green ">> Good luck in the swarm!"
 
-if [ -n "$ORG_ID" ]; then
-    python -m hivemind_exp.gsm8k.train_single_gpu \
-        --hf_token "$HUGGINGFACE_ACCESS_TOKEN" \
-        --identity_path "$IDENTITY_PATH" \
-        --modal_org_id "$ORG_ID" \
-        --config "$CONFIG_PATH"
-else
-    python -m hivemind_exp.gsm8k.train_single_gpu \
-        --hf_token "$HUGGINGFACE_ACCESS_TOKEN" \
-        --identity_path "$IDENTITY_PATH" \
-        --public_maddr "$PUB_MULTI_ADDRS" \
-        --initial_peers "$PEER_MULTI_ADDRS" \
-        --host_maddr "$HOST_MULTI_ADDRS" \
-        --config "$CONFIG_PATH"
-fi
+while true; do
+    echo "Good luck in the swarm!"
+
+    if [ -n "$ORG_ID" ]; then
+        python -m hivemind_exp.gsm8k.train_single_gpu \
+            --hf_token "$HUGGINGFACE_ACCESS_TOKEN" \
+            --identity_path "$IDENTITY_PATH" \
+            --modal_org_id "$ORG_ID" \
+            --config "$CONFIG_PATH"
+    else
+        python -m hivemind_exp.gsm8k.train_single_gpu \
+            --hf_token "$HUGGINGFACE_ACCESS_TOKEN" \
+            --identity_path "$IDENTITY_PATH" \
+            --public_maddr "$PUB_MULTI_ADDRS" \
+            --initial_peers "$PEER_MULTI_ADDRS" \
+            --host_maddr "$HOST_MULTI_ADDRS" \
+            --config "$CONFIG_PATH"
+    fi
+
+    sleep 1
+done
 
 wait  # Keep script running until Ctrl+C
